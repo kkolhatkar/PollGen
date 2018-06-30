@@ -13,14 +13,14 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping(path = "register")
-	public void create(@RequestBody UserEntity userEntity) {
-		userService.create(userEntity);
+	public void create(@RequestBody UserEntity user) {
+		userService.create(user);
 	}
 
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.GET, value = "{username}")
 	public String read(@PathVariable("username") String username) {
-		return userService.read(username);
+		return userService.findByUsername(username).getEmail();
 	}
 
 }

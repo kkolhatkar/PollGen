@@ -1,6 +1,7 @@
 package com.pollgen.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.Transient;
 
 import javax.persistence.Column;
@@ -19,9 +20,11 @@ public class UserEntity {
 	@CreationTimestamp
 	@Column(updatable = false)
 	private Date created;
+	@Column(unique = true)
 	private String email;
 	private String role;
-	private boolean isActive;
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private Boolean enabled;
 
 	public String getUsername() {
 		return username;
@@ -63,11 +66,11 @@ public class UserEntity {
 		this.role = role;
 	}
 
-	public boolean getActive() {
-		return isActive;
+	public Boolean getEnabled() {
+		return enabled;
 	}
 
-	public void setActive(boolean active) {
-		this.isActive = active;
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 }
