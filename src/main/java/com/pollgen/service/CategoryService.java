@@ -1,13 +1,13 @@
 package com.pollgen.service;
 
-import com.pollgen.entity.Category;
+import com.pollgen.entity.CategoryEntity;
 
 import java.util.List;
 
 public interface CategoryService {
 
-    public void create(Category category);
+	public void create(CategoryEntity category);
 
-    public List<Category> read();
+	public List<CategoryEntity> read();
 
 }
