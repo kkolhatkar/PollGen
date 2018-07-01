@@ -1,5 +1,6 @@
 package com.pollgen.serviceImplementation;
 
+import com.pollgen.entity.RolesEntity;
 import com.pollgen.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,8 +29,10 @@ public class UserDetailsServiceImplementation implements UserDetailsService {
 		}
 
 		List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
-		GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRole());
-		grantList.add(authority);
+		for (RolesEntity role : user.getRoles()) {
+			grantList.add(new SimpleGrantedAuthority("ROLE_" + role.getRole()));
+		}
+
 		return (UserDetails) new User(user.getUsername(), user.getPassword(), user.getEnabled(), true, true, true, grantList);
 	}
 

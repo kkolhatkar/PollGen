@@ -4,11 +4,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.Transient;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "User")
@@ -22,9 +20,12 @@ public class UserEntity {
 	private Date created;
 	@Column(unique = true)
 	private String email;
-	private String role;
+	//private String role;
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private Boolean enabled;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "username"))
+	private Set<RolesEntity> roles;
 
 	public String getUsername() {
 		return username;
@@ -58,13 +59,13 @@ public class UserEntity {
 		this.email = email;
 	}
 
-	public String getRole() {
+	/*public String getRole() {
 		return role;
 	}
 
 	public void setRole(String role) {
 		this.role = role;
-	}
+	}*/
 
 	public Boolean getEnabled() {
 		return enabled;
@@ -73,4 +74,15 @@ public class UserEntity {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
+
+	public Set<RolesEntity> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<RolesEntity> roles) {
+		this.roles = roles;
+	}
+
+
+
 }
